@@ -1,4 +1,32 @@
 import { GoogleGenAI } from '@google/genai';
+import admin from 'firebase-admin';
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
+
+const db = admin.firestore();
+
+async function updatePrediction(text) {
+  try {
+    const docRef = db.collection('answers').doc('gemini');
+
+    await docRef.set({
+      text: text,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(), // Хорошим тоном считается ставить время сервера
+    });
+
+    const docSnap = await docRef.get();
+    console.log('Новые данные в базе:', docSnap.data());
+  } catch (error) {
+    console.error('Ошибка записи в Firebase:', error);
+    process.exit(1);
+  }
+}
 
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: apiKey });
@@ -20,7 +48,7 @@ async function main() {
                 Формат вывода:
                 - Выводи ТОЛЬКО текст предсказания, без префиксов, меток, пояснений, ссылок или дополнительных строк.
                 - Длина: 1–2 строки, ≤120 символов.
-                - Язык: украинский или русский (можно чередовать).
+                - Язык: украинский
                 - Допускается 1–2 уместных эмодзи, но не обязательно.
 
                 Тон и ограничения:
@@ -39,9 +67,18 @@ async function main() {
         },
       ],
     });
-    console.log(response.text);
+
+    const predictionText = response.text; 
+    
+    if (predictionText) {
+      await updatePrediction(predictionText);
+    } else {
+      throw new Error("Gemini вернул пустой ответ");
+    }
+
   } catch (error) {
     console.error('Ошибка API:', error.message);
+    process.exit(1);
   }
 }
 
