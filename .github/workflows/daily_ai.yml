@@ -1,0 +1,9 @@
+name: Daily Geminy to Firebase
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
