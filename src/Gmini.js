@@ -1,14 +1,12 @@
-import 'dotenv/config';
+import 'dotenv/config'
 import { GoogleGenAI } from '@google/genai';
 
-// export default function Gmini() {
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: apiKey });
 
 async function main() {
   try {
     const response = await ai.models.generateContent({
-      // 1. Используй стабильную модель
       model: 'gemini-3-flash-preview',
       contents: [
         {
