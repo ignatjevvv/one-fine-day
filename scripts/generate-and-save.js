@@ -1,7 +1,7 @@
 import { GoogleGenAI } from '@google/genai';
 import admin from 'firebase-admin';
 
-const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
+const rawServiceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
 
 // 1. Проверяем, что переменная вообще получена
 if (!rawServiceAccount) {
