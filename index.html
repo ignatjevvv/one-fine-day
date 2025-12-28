@@ -7,9 +7,26 @@
     <title>one-fine-day</title>
   </head>
   <body>
-    <section class="container ">
-      <div id="root"></div>
+    <section class="container">
+      <div class="background" data-us-project="Hr0FmDUdFKGHkJ1hyxih" style="width: 100vw; height: 100vh">
+        <div id="root"></div>
+      </div>
     </section>
     <script type="module" src="/src/main.jsx"></script>
+    <script type="text/javascript">
+      !(function () {
+        if (!window.UnicornStudio) {
+          window.UnicornStudio = { isInitialized: !1 };
+          var i = document.createElement('script');
+          ((i.src =
+            'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.5.3/dist/unicornStudio.umd.js'),
+            (i.onload = function () {
+              window.UnicornStudio.isInitialized ||
+                (UnicornStudio.init(), (window.UnicornStudio.isInitialized = !0));
+            }),
+            (document.head || document.body).appendChild(i));
+        }
+      })();
+    </script>
   </body>
 </html>

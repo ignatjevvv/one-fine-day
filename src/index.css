@@ -15,10 +15,10 @@
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex;
   place-items: center;
   text-align: center;
-  justify-content: center;
+  justify-content: center; */
   min-width: 320px;
   min-height: 100vh;
 }
@@ -33,9 +33,32 @@ span {
   font-weight: 400;
 }
 
+
 .container {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  position: relative;
+}
+
+/* .message-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+} */
+
+.background {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* justify-content: center;
+  place-items: center;
+  position: absolute; */
+}
+
+#root {
+  position: absolute;
+  text-align: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .chroma-text {
