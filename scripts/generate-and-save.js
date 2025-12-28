@@ -1,40 +1,7 @@
 import { GoogleGenAI } from '@google/genai';
 import admin from 'firebase-admin';
 
-const rawServiceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
-
-// 1. Проверяем, что переменная вообще получена
-if (!rawServiceAccount) {
-  console.error("❌ Ошибка: Секрет FIREBASE_SERVICE_ACCOUNT пуст или не найден в env!");
-  process.exit(1);
-}
-
-let serviceAccount;
-try {
-  serviceAccount = typeof rawServiceAccount === 'string' 
-    ? JSON.parse(rawServiceAccount) 
-    : rawServiceAccount;
-    
-  console.log("✅ JSON успешно распаршен.");
-} catch (e) {
-  console.error("❌ Ошибка при выполнении JSON.parse:");
-  console.error(e.message);
-  console.log("Содержимое (первые 20 символов):", rawServiceAccount.substring(0, 20));
-  process.exit(1);
-}
-
-// 3. Финальная проверка перед инициализацией
-if (!serviceAccount || typeof serviceAccount !== 'object') {
-  console.error("❌ Ошибка: В cert() передается не объект. Тип:", typeof serviceAccount);
-  process.exit(1);
-}
-
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
-console.log("🚀 Firebase успешно инициализирован!");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -101,14 +68,13 @@ async function main() {
       ],
     });
 
-    const predictionText = response.text; 
-    
+    const predictionText = response.text;
+
     if (predictionText) {
       await updatePrediction(predictionText);
     } else {
-      throw new Error("Gemini вернул пустой ответ");
+      throw new Error('Gemini вернул пустой ответ');
     }
-
   } catch (error) {
     console.error('Ошибка API:', error.message);
     process.exit(1);
@@ -116,3 +82,12 @@ async function main() {
 }
 
 main();
+
+const text = 'Можливо, сьогодні маленька приємність з’явиться там, де ви її зовсім не чекали ✨😜';
+const emojiRegex = /\p{Extended_Pictographic}+/gu;
+
+const pureText = text.replace(emojiRegex, '').trim(); 
+const emojis = text.match(emojiRegex)?.join('') || '';
+
+console.log(emojis);
+console.log(pureText);
