@@ -12,8 +12,8 @@ export default defineConfig({
         name: 'One Fine Day - Передбачення',
         short_name: 'OneFineDay',
         description: 'Твоє щоденне передбачення від AI',
-        theme_color: '#ffffff', // Цвет верхней панели в браузере
-        background_color: '#ffffff', // Цвет фона при запуске
+        theme_color: '#fffcf2', // Цвет верхней панели в браузере
+        background_color: '#fffcf2', // Цвет фона при запуске
         display: 'standalone', // Запуск как отдельное приложение (без строки адреса)
         icons: [
           {
