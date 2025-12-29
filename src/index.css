@@ -33,7 +33,6 @@ span {
   font-weight: 400;
 }
 
-
 .container {
   position: relative;
 }
@@ -46,7 +45,7 @@ span {
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 20px;
   color: white;
-  text-shadow: 0 0 5px rgba(237, 237, 237, 0.5);
+  text-shadow: 0 0 5px rgba(237, 237, 237, 0.185);
 }
 
 .background {
